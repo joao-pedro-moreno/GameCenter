@@ -136,6 +136,10 @@ export function GameListContextProvider({
   }
 
   useEffect(() => {
+    setCurrentPage(0)
+  }, [gameList])
+
+  useEffect(() => {
     api
       .get('/data', {
         headers: {
