@@ -10,7 +10,6 @@ Projeto desenvolvido no desafio para vaga de estágio da App Masters
 <img src="https://i.imgur.com/IbNgxvR.png" />
 <img src="https://i.imgur.com/0jZXPZw.png" />
 <img src="https://i.imgur.com/cOzkxQ4.png" />
-<img src="" />
 
 #
 
