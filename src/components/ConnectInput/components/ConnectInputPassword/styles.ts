@@ -1,11 +1,13 @@
 import { styled } from 'styled-components'
 
-export const SearchFormContainer = styled.form`
+export const ConnectInputPasswordContainer = styled.div`
+  width: 100%;
   position: relative;
 
   > input {
     width: 100%;
     padding: 1rem 0.75rem;
+    margin-bottom: 1rem;
 
     background-color: ${({ theme }) => theme.colors.white};
     border: 1px solid ${({ theme }) => theme.colors['gray-200']};

@@ -1,13 +1,12 @@
-import { GameController } from '@phosphor-icons/react'
-
-import { HeaderContainer } from './styles'
+import { HeaderContainer, LoginButton } from './styles'
+import { Logo } from '../Logo'
 
 export function Header() {
   return (
-    <HeaderContainer className="container">
-      <h1>
-        GameCenter <GameController />
-      </h1>
+    <HeaderContainer>
+      <Logo />
+
+      <LoginButton to="/connect/login">Fazer Login</LoginButton>
     </HeaderContainer>
   )
 }

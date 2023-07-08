@@ -22,6 +22,7 @@ export function GameList() {
             backgroundImg={game.thumbnail}
             gameTitle={game.title}
             gameDesc={game.short_description}
+            gamePublisher={game.publisher}
           />
         ))}
       </GamesContainer>

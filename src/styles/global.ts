@@ -9,7 +9,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    background-color: ${({ theme }) => theme.colors['main-background']};
+    background-color: ${({ theme }) => theme.colors['gray-100']};
   }
 
   body, input, textarea, button {
@@ -17,12 +17,6 @@ export const GlobalStyle = createGlobalStyle`
     font-weight: 400;
     font-size: 1rem;
     -webkit-font-smoothing: antialiased
-  }
-
-  .container {
-    /* width: 70rem; */
-    max-width: 1120px;
-    margin: 0 auto;
   }
 
   button {

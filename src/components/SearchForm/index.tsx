@@ -40,7 +40,7 @@ export function SearchForm() {
         {...register('title')}
       />
       <button type="submit">
-        <MagnifyingGlass size={25} />
+        <MagnifyingGlass size={20} />
       </button>
     </SearchFormContainer>
   )
