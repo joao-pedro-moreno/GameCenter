@@ -7,7 +7,6 @@ import { RegisterPage } from './pages/auth/Register'
 import { GamePage } from './pages/Game'
 import { FavoritePage } from './pages/Favorites'
 import { RatedPage } from './pages/Rates'
-import { useAuth } from './hooks/useAuth'
 
 export function Router() {
   return (
