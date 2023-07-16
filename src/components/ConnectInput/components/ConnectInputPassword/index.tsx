@@ -1,12 +1,14 @@
-import { useState, InputHTMLAttributes } from 'react'
+import { useState, InputHTMLAttributes, forwardRef } from 'react'
 import { Eye, EyeSlash } from '@phosphor-icons/react'
 
 import { ConnectInputPasswordContainer } from './styles'
 
-interface ConnectInputPasswordProps
-  extends InputHTMLAttributes<HTMLInputElement> {}
+type ConnectInputPasswordProps = InputHTMLAttributes<HTMLInputElement> & {}
 
-export function ConnectInputPassword({ ...props }: ConnectInputPasswordProps) {
+export const ConnectInputPassword = forwardRef<
+  HTMLInputElement,
+  ConnectInputPasswordProps
+>(({ ...props }, ref) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
   function HandleToggleInputVisibility() {
@@ -19,11 +21,17 @@ export function ConnectInputPassword({ ...props }: ConnectInputPasswordProps) {
 
   return (
     <ConnectInputPasswordContainer>
-      <input type={isPasswordVisible ? 'text' : 'password'} {...props} />
+      <input
+        type={isPasswordVisible ? 'text' : 'password'}
+        {...props}
+        ref={ref}
+      />
 
       <button onClick={HandleToggleInputVisibility} type="button">
         {isPasswordVisible ? <Eye size={20} /> : <EyeSlash size={20} />}
       </button>
     </ConnectInputPasswordContainer>
   )
-}
+})
+
+ConnectInputPassword.displayName = 'ConnectInputPassword'

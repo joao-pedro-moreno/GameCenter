@@ -4,16 +4,19 @@ import { BrowserRouter } from 'react-router-dom'
 import { GlobalStyle } from './styles/global'
 import { defaultTheme } from './styles/themes/default'
 
-import { GameListContextProvider } from './contexts/GameListContext'
+import { GlobalContextProvider } from './contexts/GlobalContext'
 import { Router } from './Router'
+import { AuthContextProvider } from './contexts/AuthContext'
 
 export function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <BrowserRouter>
-        <GameListContextProvider>
-          <Router />
-        </GameListContextProvider>
+        <AuthContextProvider>
+          <GlobalContextProvider>
+            <Router />
+          </GlobalContextProvider>
+        </AuthContextProvider>
       </BrowserRouter>
 
       <GlobalStyle />

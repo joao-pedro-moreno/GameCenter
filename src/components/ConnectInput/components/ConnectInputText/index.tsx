@@ -1,8 +1,13 @@
-import { InputHTMLAttributes } from 'react'
+import { InputHTMLAttributes, forwardRef } from 'react'
 import { ConnectInputTextContainer } from './styles'
 
-interface ConnectInputTextProps extends InputHTMLAttributes<HTMLInputElement> {}
+type ConnectInputTextProps = InputHTMLAttributes<HTMLInputElement> & {}
 
-export function ConnectInputText({ ...props }: ConnectInputTextProps) {
-  return <ConnectInputTextContainer {...props} />
-}
+export const ConnectInputText = forwardRef<
+  HTMLInputElement,
+  ConnectInputTextProps
+>(({ ...props }, ref) => {
+  return <ConnectInputTextContainer {...props} ref={ref} />
+})
+
+ConnectInputText.displayName = 'ConnectInputText'

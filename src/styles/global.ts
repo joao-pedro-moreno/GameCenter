@@ -32,12 +32,12 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   ::-webkit-scrollbar-track {
-    background: ${({ theme }) => theme.colors['secondary-background']}
+    background: ${({ theme }) => theme.colors['gray-300']}
   }
 
   ::-webkit-scrollbar-thumb {
     border-radius: 2rem;
-    background: ${({ theme }) => theme.colors.button}
+    background: ${({ theme }) => theme.colors['gray-500']}
   }
 
   @keyframes rotation {
@@ -49,9 +49,23 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  @keyframes favorite {
+    0% {
+      transform: scale(1);
+    }
+
+    50% {
+      transform: scale(1.5);
+    }
+
+    100% {
+      transform: scale(1);
+    }
+  }
+
   @media (max-width: 768px) {
     html {
-        font-size: 87.5%;
+        font-size: 85%;
     }
   }
 

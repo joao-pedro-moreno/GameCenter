@@ -20,7 +20,7 @@ export const OutsideLoader = styled.div`
   border-top: 3px solid ${({ theme }) => theme.colors.button};
   border-right: 3px solid ${({ theme }) => theme.colors.button};
   border-bottom: 3px solid ${({ theme }) => theme.colors.button};
-  border-left: 3px solid ${({ theme }) => theme.colors['main-background']};
+  border-left: 3px solid ${({ theme }) => theme.colors['gray-100']};
 
   display: flex;
   align-items: center;
@@ -36,9 +36,9 @@ export const InsideLoader = styled.div`
   border-radius: 999px;
 
   border-top: 3px solid ${({ theme }) => theme.colors.button};
-  border-right: 3px solid ${({ theme }) => theme.colors['main-background']};
+  border-right: 3px solid ${({ theme }) => theme.colors['gray-100']};
   border-bottom: 3px solid ${({ theme }) => theme.colors.button};
   border-left: 3px solid ${({ theme }) => theme.colors.button};
 
-  animation: rotation 2s infinite linear;
+  animation: rotation 2.5s infinite linear;
 `

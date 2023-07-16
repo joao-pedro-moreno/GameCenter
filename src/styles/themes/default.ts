@@ -2,12 +2,9 @@ export const defaultTheme = {
   colors: {
     white: '#FFFFFF',
 
-    'main-background': '#0d141e',
-    'secondary-background': '#0b233f',
-
     input: '#172844',
     border: '#2b80c3',
-    button: '#2b80c3',
+    button: '#3485FF',
     error: '#e36363',
 
     label: '#292e4b',
@@ -24,6 +21,18 @@ export const defaultTheme = {
     'gray-700': '#334155',
     'gray-800': '#1E293B',
     'gray-900': '#0F172A',
+
+    'blue-100': '#E0ECFF',
+
+    'yellow-100': '#FCD397',
+    'yellow-200': '#FFA724',
+
+    'red-100': '#F2D9D9',
+    'red-200': '#EA4B65',
+    'red-300': '#E36363',
+    'red-400': '#E83F5B',
+
+    hover: '#5699FF',
   },
   fonts: {
     poppins: "'Poppins', sans-serif",

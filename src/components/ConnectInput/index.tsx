@@ -1,3 +1,4 @@
+import { ConnectInputError } from './components/ConnectInputError'
 import { ConnectInputLabel } from './components/ConnectInputLabel'
 import { ConnectInputPassword } from './components/ConnectInputPassword'
 import { ConnectInputRoot } from './components/ConnectInputRoot'
@@ -8,4 +9,5 @@ export const ConnectInput = {
   Label: ConnectInputLabel,
   Text: ConnectInputText,
   Password: ConnectInputPassword,
+  Error: ConnectInputError,
 }

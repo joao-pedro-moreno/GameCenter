@@ -2,26 +2,31 @@ import { LinkBreak } from '@phosphor-icons/react'
 
 import { ErrorContainer } from './styles'
 
-import { useGameList } from '../../hooks/useGameList'
+import { useGlobal } from '../../hooks/useGlobal'
 
 export function ErrorMessage() {
-  const { statusCode, errorMessage } = useGameList()
+  const { errorResponse } = useGlobal()
 
-  const expectedErrorStatusCodes = [500, 502, 503, 504, 507, 508, 509]
+  function handleReload() {
+    window.location.reload()
+  }
 
   return (
     <ErrorContainer>
-      {expectedErrorStatusCodes.includes(statusCode) ? (
-        <h2>{statusCode}</h2>
+      {errorResponse.statusCode ? (
+        <h2>{errorResponse.statusCode}</h2>
       ) : (
         <h2>
           <LinkBreak />
         </h2>
       )}
+
       <p>
-        {errorMessage ||
+        {errorResponse.errorMessage ||
           'Um erro inesperado ocorreu, atualize a página para tentar novamente'}
       </p>
+
+      <button onClick={handleReload}>Tentar Novamente</button>
     </ErrorContainer>
   )
 }

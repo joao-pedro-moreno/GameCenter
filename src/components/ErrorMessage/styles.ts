@@ -10,11 +10,10 @@ export const ErrorContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
 
   > h2 {
     font-size: 5rem;
-    color: ${({ theme }) => theme.colors.error};
+    color: ${({ theme }) => theme.colors['red-400']};
 
     > svg {
       font-size: 5rem;
@@ -23,7 +22,23 @@ export const ErrorContainer = styled.div`
 
   > p {
     font-size: 1.5rem;
-    color: ${({ theme }) => theme.colors.white};
+    color: ${({ theme }) => theme.colors['gray-800']};
     text-align: center;
+  }
+
+  > button {
+    margin-top: 1rem;
+
+    padding: 0.75rem 1rem;
+    background-color: ${({ theme }) => theme.colors['red-400']};
+    border: none;
+    border-radius: 4px;
+
+    color: ${({ theme }) => theme.colors.white};
+    font-size: 1.125rem;
+
+    &:hover {
+      background-color: ${({ theme }) => theme.colors['red-200']};
+    }
   }
 `
