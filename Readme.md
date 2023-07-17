@@ -8,10 +8,15 @@ Acesse o projeto online <https://gamecenter-joao-pedro-moreno.vercel.app>
 
 ## Preview
 
-<img src="https://i.imgur.com/Oxd93r0.png" />
-<img src="https://i.imgur.com/IbNgxvR.png" />
-<img src="https://i.imgur.com/0jZXPZw.png" />
-<img src="https://i.imgur.com/cOzkxQ4.png" />
+<img src="https://i.imgur.com/EzfRXNY.png" />
+<img src="https://i.imgur.com/EaVkLeq.png" />
+<img src="https://i.imgur.com/3Qh1Zo0.png" />
+<img src="https://i.imgur.com/ZYGNcRs.png" />
+<img src="https://i.imgur.com/FWPanHR.png" />
+<img src="https://i.imgur.com/QwcM1J5.png" />
+<img src="https://i.imgur.com/MHAoPL8.png" />
+<img src="https://i.imgur.com/L4l9bZR.png" />
+<img src="https://i.imgur.com/Q7gHvVS.png" />
 
 #
 
@@ -24,6 +29,9 @@ Acesse o projeto online <https://gamecenter-joao-pedro-moreno.vercel.app>
 - React-hook-form
 - Zod
 - Axios
+- React-Router-Dom
+- Firebase (Authentication e Firestore Database)
+- Js-Cookie
 
 #
 
