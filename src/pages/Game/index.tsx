@@ -1,7 +1,9 @@
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import { Heart, Star } from '@phosphor-icons/react'
 import { useGlobal } from '../../hooks/useGlobal'
 import {
   AsideInfoContainer,
+  ErrorContainer,
   GameHeaderContainer,
   GameInfo,
   GameInfoContainer,
@@ -9,7 +11,6 @@ import {
   LikeButtonContainer,
 } from './styles'
 import { Rating } from '../../components/Rating'
-import { Heart, Star } from '@phosphor-icons/react'
 
 export function GamePage() {
   const {
@@ -19,6 +20,7 @@ export function GamePage() {
     getGameAverageRateNote,
   } = useGlobal()
   const { id } = useParams()
+  const navigate = useNavigate()
 
   const gameId = Number(id)
 
@@ -27,6 +29,10 @@ export function GamePage() {
   const isGameFavorited = verifyIfGameIsAlreadyFavorited(gameId)
 
   const gameRateNote = getGameAverageRateNote(gameId)
+
+  function handleError() {
+    navigate('/')
+  }
 
   return (
     <div className="container">
@@ -38,7 +44,7 @@ export function GamePage() {
             </h2>
 
             <span>
-              <Star color="#FFA724" weight="fill" /> {gameRateNote}
+              <Star color="#FFA724" weight="fill" /> {gameRateNote.toFixed(1)}
             </span>
           </GameHeaderContainer>
 
@@ -90,7 +96,13 @@ export function GamePage() {
           </GameInfoContainer>
         </GamePageContainer>
       ) : (
-        <h2>Erro</h2>
+        <ErrorContainer>
+          <h2>404</h2>
+
+          <p>Jogo não encontrado</p>
+
+          <button onClick={handleError}>Voltar à página inicial</button>
+        </ErrorContainer>
       )}
     </div>
   )

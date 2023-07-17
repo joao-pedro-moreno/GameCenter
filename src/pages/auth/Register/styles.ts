@@ -16,7 +16,12 @@ export const RegisterContainer = styled.div`
   }
 
   @media (max-width: 768px) {
+    width: calc(100vw - 6rem);
     margin-top: 5rem;
+
+    > p {
+      width: 100%;
+    }
   }
 `
 

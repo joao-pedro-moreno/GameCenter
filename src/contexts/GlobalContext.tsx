@@ -210,7 +210,7 @@ export function GlobalContextProvider({
           const userRatedGamesIds: number[] = []
 
           gamesRateNotes.forEach((game) => {
-            if (game.rateNote > 0) {
+            if (game.rateNote > 0 && game.email === authenticatedUserEmail) {
               userRatedGamesIds.push(game.gameId)
             }
           })
