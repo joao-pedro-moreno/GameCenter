@@ -8,8 +8,8 @@ export const GameListContainer = styled.div`
 export const GamesContainer = styled.div`
   margin-top: 1rem;
 
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.775rem;
 
   border-top: 1px solid ${({ theme }) => theme.colors['gray-300']};
@@ -17,9 +17,12 @@ export const GamesContainer = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors['gray-300']};
   padding-bottom: 1rem;
 
-  @media (max-width: 1120px) {
-    justify-content: center;
-    padding: 1rem;
+  @media (max-width: 960px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 576px) {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 `
 

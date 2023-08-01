@@ -6,6 +6,8 @@ export const RegisterContainer = styled.div`
   flex-direction: column;
   gap: 1rem;
 
+  margin-top: 5rem;
+
   > h1 {
     color: ${({ theme }) => theme.colors['gray-800']};
   }
@@ -17,7 +19,6 @@ export const RegisterContainer = styled.div`
 
   @media (max-width: 768px) {
     width: calc(100vw - 6rem);
-    margin-top: 5rem;
 
     > p {
       width: 100%;

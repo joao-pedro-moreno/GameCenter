@@ -4,20 +4,26 @@ import bgImage from '../../assets/bg.svg'
 import { LogoContainer } from '../../components/Logo/styles'
 
 export const LayoutContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  height: 100vh;
+  display: flex;
+
+  > div {
+    flex: 1 1 0%;
+  }
 `
 
 export const ContentContainer = styled.div`
   position: relative;
 
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
 
   background-color: ${({ theme }) => theme.colors['gray-100']};
   padding: 2rem 3rem;
+
+  overflow-y: auto;
 `
 
 export const Logo = styled(LogoContainer)`
@@ -38,12 +44,10 @@ export const Logo = styled(LogoContainer)`
 `
 
 export const BgImageContainer = styled.div`
-  height: 100vh;
-
   background-image: url(${bgImage});
   background-size: cover;
 
-  @media (max-width: 768px) {
+  @media (max-width: 960px) {
     display: none;
   }
 `

@@ -458,6 +458,10 @@ export function GlobalContextProvider({
       case 'previous': {
         if (currentPage > 0) {
           setCurrentPage((previousState) => previousState - 1)
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+          })
         }
         break
       }
@@ -467,6 +471,10 @@ export function GlobalContextProvider({
           offset < gameListToShow.length - itemsPerPage
         ) {
           setCurrentPage((previousState) => previousState + 1)
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+          })
         }
       }
     }

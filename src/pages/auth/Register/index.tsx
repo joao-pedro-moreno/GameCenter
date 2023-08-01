@@ -30,9 +30,7 @@ export function RegisterPage() {
   const { registerUser, isUserAuthenticated } = useAuth()
   const navigate = useNavigate()
 
-  const [areThePasswordsTheSame, setAreThePasswordsTheSame] = useState<
-    boolean | null
-  >(null)
+  const [areThePasswordsTheSame, setAreThePasswordsTheSame] = useState(true)
 
   const registerAccountForm = useForm<RegisterAccountData>({
     resolver: zodResolver(registerAccountSchema),
@@ -96,12 +94,12 @@ export function RegisterPage() {
             {...register('password')}
             id="gamecenter-password"
           />
-          {errors.password ? (
-            <ConnectInput.Error errorMessage={errors.password.message!} />
-          ) : (
-            areThePasswordsTheSame && (
-              <ConnectInput.Error errorMessage="As senhas informadas são diferentes" />
-            )
+          {errors.repeatPassword && (
+            <ConnectInput.Error errorMessage={errors.repeatPassword.message!} />
+          )}
+
+          {!areThePasswordsTheSame && (
+            <ConnectInput.Error errorMessage="As senhas informadas são diferentes" />
           )}
         </ConnectInput.Root>
 
@@ -115,12 +113,12 @@ export function RegisterPage() {
             {...register('repeatPassword')}
             id="gamecenter-repeat-password"
           />
-          {errors.repeatPassword ? (
+          {errors.repeatPassword && (
             <ConnectInput.Error errorMessage={errors.repeatPassword.message!} />
-          ) : (
-            areThePasswordsTheSame && (
-              <ConnectInput.Error errorMessage="As senhas informadas são diferentes" />
-            )
+          )}
+
+          {!areThePasswordsTheSame && (
+            <ConnectInput.Error errorMessage="As senhas informadas são diferentes" />
           )}
 
           {error && <ConnectInput.Error errorMessage={error} />}

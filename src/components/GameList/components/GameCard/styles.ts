@@ -6,8 +6,6 @@ export const GameCardContainer = styled.div`
   justify-content: space-between;
   gap: 0.5rem;
 
-  width: 365px;
-
   border-radius: 8px;
   box-shadow: 0px 4px 16px 0px #2b80c340;
 
@@ -16,7 +14,6 @@ export const GameCardContainer = styled.div`
 
   > img {
     border-radius: 4px;
-    max-width: calc(365px - 2rem);
     aspect-ratio: 16/9;
   }
 
