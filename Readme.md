@@ -31,7 +31,6 @@ Acesse o projeto online <https://gamecenter-joao-pedro-moreno.vercel.app>
 - Axios
 - React-Router-Dom
 - Firebase (Authentication e Firestore Database)
-- Js-Cookie
 
 #
 

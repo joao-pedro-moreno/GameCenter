@@ -3,7 +3,6 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from 'firebase/auth'
-import Cookies from 'js-cookie'
 
 import { auth } from '../services/firebase'
 import { useNavigate } from 'react-router-dom'
@@ -41,7 +40,14 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       .then((userCredential) => {
         const user = userCredential.user
 
-        Cookies.set('GameCenter-UserInfo', user.email!, { expires: 7 })
+        localStorage.setItem(
+          'GameCenter-UserInfo',
+          JSON.stringify({
+            email: user.email,
+            expires: null,
+          }),
+        )
+
         setAuthenticatedUserEmail(user.email!)
 
         return 'success'
@@ -58,7 +64,29 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       .then((userCredential) => {
         const user = userCredential.user
 
-        Cookies.set('GameCenter-UserInfo', user.email!, { expires: 7 })
+        if (rememberAccount) {
+          const today = new Date()
+          const logoutDay = new Date()
+
+          logoutDay.setDate(today.getDate() + 7)
+
+          localStorage.setItem(
+            'GameCenter-UserInfo',
+            JSON.stringify({
+              email: user.email,
+              expires: logoutDay,
+            }),
+          )
+        } else {
+          localStorage.setItem(
+            'GameCenter-UserInfo',
+            JSON.stringify({
+              email: user.email,
+              expires: null,
+            }),
+          )
+        }
+
         setAuthenticatedUserEmail(user.email!)
 
         return 'success'
@@ -73,18 +101,28 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   function userLogOut() {
     setIsUserAuthenticated(false)
     setAuthenticatedUserEmail('')
-    Cookies.remove('GameCenter-UserInfo')
+    localStorage.removeItem('GameCenter-UserInfo')
     auth.signOut()
     navigate('/')
   }
 
   function verifyUserAuthentication() {
-    const userCookiesInfo = Cookies.get('GameCenter-UserInfo')
+    const userLocalStorageInfos = localStorage.getItem('GameCenter-UserInfo')
 
-    if (userCookiesInfo) {
-      setIsUserAuthenticated(true)
-      setAuthenticatedUserEmail(userCookiesInfo)
-      return true
+    if (userLocalStorageInfos) {
+      const expirationDate = new Date(JSON.parse(userLocalStorageInfos).expires)
+      const today = new Date()
+
+      if (expirationDate.getDate() === today.getDate()) {
+        localStorage.removeItem('GameCenter-UserInfo')
+        setIsUserAuthenticated(false)
+        setAuthenticatedUserEmail('')
+        return false
+      } else {
+        setIsUserAuthenticated(true)
+        setAuthenticatedUserEmail(JSON.parse(userLocalStorageInfos).email)
+        return true
+      }
     }
 
     setIsUserAuthenticated(false)

@@ -14,7 +14,6 @@
     "@phosphor-icons/react": "^2.0.10",
     "axios": "^1.4.0",
     "firebase": "^10.0.0",
-    "js-cookie": "^3.0.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-firebase-hooks": "^5.1.1",
@@ -26,7 +25,6 @@
   "devDependencies": {
     "@hookform/resolvers": "^3.1.1",
     "@rocketseat/eslint-config": "^1.2.0",
-    "@types/js-cookie": "^3.0.3",
     "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",
     "@types/react-router-dom": "^5.3.3",
