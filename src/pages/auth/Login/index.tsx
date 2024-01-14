@@ -88,6 +88,8 @@ export function LoginPage() {
           )}
 
           {error && <ConnectInput.Error errorMessage={error} />}
+
+          <ConnectInput.Checkbox label="Manter sessão ativa por 7 dias" />
         </ConnectInput.Root>
 
         <button type="submit">Entrar</button>

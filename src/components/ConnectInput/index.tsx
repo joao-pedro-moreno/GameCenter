@@ -1,3 +1,4 @@
+import { ConnectInputCheckbox } from './components/ConnectInputCheckbox'
 import { ConnectInputError } from './components/ConnectInputError'
 import { ConnectInputLabel } from './components/ConnectInputLabel'
 import { ConnectInputPassword } from './components/ConnectInputPassword'
@@ -9,5 +10,6 @@ export const ConnectInput = {
   Label: ConnectInputLabel,
   Text: ConnectInputText,
   Password: ConnectInputPassword,
+  Checkbox: ConnectInputCheckbox,
   Error: ConnectInputError,
 }

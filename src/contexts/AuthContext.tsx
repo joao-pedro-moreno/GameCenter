@@ -24,6 +24,7 @@ interface AuthContextType {
   loginUser: ({ email, password }: AuthUserProps) => string | Promise<any>
   registerUser: ({ email, password }: AuthUserProps) => string | Promise<any>
   userLogOut: () => void
+  setRememberAccount: (isChecked: boolean) => void
 }
 
 export const AuthContext = createContext({} as AuthContextType)
@@ -31,6 +32,7 @@ export const AuthContext = createContext({} as AuthContextType)
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false)
   const [authenticatedUserEmail, setAuthenticatedUserEmail] = useState('')
+  const [rememberAccount, setRememberAccount] = useState(false)
 
   const navigate = useNavigate()
 
@@ -102,6 +104,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         loginUser,
         registerUser,
         userLogOut,
+        setRememberAccount,
       }}
     >
       {children}
