@@ -9,9 +9,11 @@ import { useNavigate } from 'react-router-dom'
 import {
   addDoc,
   collection,
+  doc,
   getDocs,
   limit,
   query,
+  updateDoc,
   where,
 } from '@firebase/firestore'
 
@@ -68,9 +70,9 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     return credentials
   }
 
-  function loginUser({ email, password }: AuthUserProps) {
+  async function loginUser({ email, password }: AuthUserProps) {
     const credentials = signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+      .then(async (userCredential) => {
         const user = userCredential.user
 
         if (rememberAccount) {
@@ -81,23 +83,68 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
           logoutDay.setDate(today.getDate() + 7)
 
-          addDoc(collection(db, 'authenticationSessionTokens'), {
-            email: user.email,
-            sessionToken,
-          }).then(() => {
-            localStorage.setItem(
-              'GameCenter-UserInfo',
-              JSON.stringify({
-                email: user.email,
-                expires: logoutDay,
-              }),
+          const dbCollection = collection(db, 'authenticationSessionTokens')
+
+          const userSessionTokenQuery = query(
+            dbCollection,
+            where('email', '==', user.email),
+          )
+
+          const queryResponse = await getDocs(userSessionTokenQuery)
+
+          if (queryResponse.docs.length > 0) {
+            const userSessionTokenCollectionId = queryResponse.docs[0].id
+
+            const documentRef = doc(
+              db,
+              'authenticationSessionTokens',
+              userSessionTokenCollectionId,
             )
 
-            localStorage.setItem('GameCenter-sessionToken', sessionToken)
+            const newSessionToken = generateRandomSessionToken()
 
-            setIsUserAuthenticated(true)
-            setAuthenticatedUserEmail(user.email!)
-          })
+            const updatedCollection = {
+              email,
+              sessionToken: newSessionToken,
+            }
+
+            updateDoc(documentRef, updatedCollection)
+              .then(() => {
+                localStorage.setItem(
+                  'GameCenter-UserInfo',
+                  JSON.stringify({
+                    email: user.email,
+                    expires: logoutDay,
+                  }),
+                )
+
+                localStorage.setItem('GameCenter-sessionToken', newSessionToken)
+
+                setIsUserAuthenticated(true)
+                setAuthenticatedUserEmail(user.email!)
+              })
+              .catch((err) => {
+                console.log(err)
+              })
+          } else {
+            addDoc(collection(db, 'authenticationSessionTokens'), {
+              email: user.email,
+              sessionToken,
+            }).then(() => {
+              localStorage.setItem(
+                'GameCenter-UserInfo',
+                JSON.stringify({
+                  email: user.email,
+                  expires: logoutDay,
+                }),
+              )
+
+              localStorage.setItem('GameCenter-sessionToken', sessionToken)
+
+              setIsUserAuthenticated(true)
+              setAuthenticatedUserEmail(user.email!)
+            })
+          }
         } else {
           localStorage.setItem(
             'GameCenter-UserInfo',
