@@ -4,8 +4,16 @@ import {
   signInWithEmailAndPassword,
 } from 'firebase/auth'
 
-import { auth } from '../services/firebase'
+import { auth, db } from '../services/firebase'
 import { useNavigate } from 'react-router-dom'
+import {
+  addDoc,
+  collection,
+  getDocs,
+  limit,
+  query,
+  where,
+} from '@firebase/firestore'
 
 interface AuthContextProviderProps {
   children: ReactNode
@@ -48,6 +56,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
           }),
         )
 
+        setIsUserAuthenticated(true)
         setAuthenticatedUserEmail(user.email!)
 
         return 'success'
@@ -68,15 +77,27 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
           const today = new Date()
           const logoutDay = new Date()
 
+          const sessionToken = generateRandomSessionToken()
+
           logoutDay.setDate(today.getDate() + 7)
 
-          localStorage.setItem(
-            'GameCenter-UserInfo',
-            JSON.stringify({
-              email: user.email,
-              expires: logoutDay,
-            }),
-          )
+          addDoc(collection(db, 'authenticationSessionTokens'), {
+            email: user.email,
+            sessionToken,
+          }).then(() => {
+            localStorage.setItem(
+              'GameCenter-UserInfo',
+              JSON.stringify({
+                email: user.email,
+                expires: logoutDay,
+              }),
+            )
+
+            localStorage.setItem('GameCenter-sessionToken', sessionToken)
+
+            setIsUserAuthenticated(true)
+            setAuthenticatedUserEmail(user.email!)
+          })
         } else {
           localStorage.setItem(
             'GameCenter-UserInfo',
@@ -85,9 +106,10 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
               expires: null,
             }),
           )
-        }
 
-        setAuthenticatedUserEmail(user.email!)
+          setIsUserAuthenticated(true)
+          setAuthenticatedUserEmail(user.email!)
+        }
 
         return 'success'
       })
@@ -102,32 +124,86 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     setIsUserAuthenticated(false)
     setAuthenticatedUserEmail('')
     localStorage.removeItem('GameCenter-UserInfo')
+    localStorage.removeItem('GameCenter-sessionToken')
     auth.signOut()
     navigate('/')
   }
 
-  function verifyUserAuthentication() {
-    const userLocalStorageInfos = localStorage.getItem('GameCenter-UserInfo')
-
-    if (userLocalStorageInfos) {
-      const expirationDate = new Date(JSON.parse(userLocalStorageInfos).expires)
-      const today = new Date()
-
-      if (expirationDate.getDate() === today.getDate()) {
-        localStorage.removeItem('GameCenter-UserInfo')
-        setIsUserAuthenticated(false)
-        setAuthenticatedUserEmail('')
-        return false
-      } else {
-        setIsUserAuthenticated(true)
-        setAuthenticatedUserEmail(JSON.parse(userLocalStorageInfos).email)
-        return true
-      }
-    }
-
+  function disconnectUser() {
     setIsUserAuthenticated(false)
     setAuthenticatedUserEmail('')
-    return false
+    localStorage.removeItem('GameCenter-UserInfo')
+    localStorage.removeItem('GameCenter-sessionToken')
+  }
+
+  async function verifyUserAuthentication() {
+    if (!isUserAuthenticated) {
+      const userLocalStorageInfos = localStorage.getItem('GameCenter-UserInfo')
+
+      if (userLocalStorageInfos) {
+        const userAuthObject = JSON.parse(userLocalStorageInfos)
+
+        if (userAuthObject.expires) {
+          const sessionToken = localStorage.getItem('GameCenter-sessionToken')
+
+          if (sessionToken) {
+            const dbCollection = collection(db, 'authenticationSessionTokens')
+
+            const sessionTokenQuery = query(
+              dbCollection,
+              where('email', '==', userAuthObject.email),
+              limit(1),
+            )
+
+            const queryResponse = await getDocs(sessionTokenQuery)
+
+            const activeSessionToken = queryResponse.docs[0].data().sessionToken
+
+            if (activeSessionToken === sessionToken) {
+              const expirationDate = new Date(userAuthObject.expires)
+              const today = new Date()
+
+              if (expirationDate.getDate() > today.getDate()) {
+                setIsUserAuthenticated(true)
+                setAuthenticatedUserEmail(userAuthObject.email)
+                return true
+              } else {
+                disconnectUser()
+                return false
+              }
+            }
+          } else {
+            disconnectUser()
+            return false
+          }
+        } else {
+          disconnectUser()
+          return false
+        }
+      } else {
+        disconnectUser()
+        return false
+      }
+    } else {
+      return true
+    }
+  }
+
+  function generateRandomSessionToken() {
+    const chars =
+      'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
+
+    const tokenChars = []
+
+    for (let i = 0; i < 32; i++) {
+      const randomChar = chars.charAt(Math.floor(Math.random() * chars.length))
+
+      tokenChars.push(randomChar)
+    }
+
+    const sessionToken = tokenChars.join('')
+
+    return sessionToken
   }
 
   useEffect(() => {

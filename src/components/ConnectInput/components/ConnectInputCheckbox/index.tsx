@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Checkbox, CheckboxContainer } from './styles'
 import { CheckFat } from '@phosphor-icons/react'
 import { useAuth } from '../../../../hooks/useAuth'
@@ -25,6 +25,10 @@ export function ConnectInputCheckbox({
       setRememberAccount(true)
     }
   }
+
+  useEffect(() => {
+    setRememberAccount(false)
+  }, [])
 
   return (
     <>
