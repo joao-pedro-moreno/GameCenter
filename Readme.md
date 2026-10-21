@@ -1,7 +1,5 @@
 # GameCenter
 
-Projeto desenvolvido no desafio para vaga de estágio da App Masters
-
 Acesse o projeto online <https://gamecenter-joao-pedro-moreno.vercel.app>
 
 #
